@@ -2,13 +2,14 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { FaCloud } from "react-icons/fa";
 import { CiSearch } from "react-icons/ci";
 import { TbDirectionSignFilled } from "react-icons/tb";
-import { BsMoon } from "react-icons/bs";
 import { BsGithub } from "react-icons/bs";
 import { GrLocation } from "react-icons/gr";
 import { SlCalender } from "react-icons/sl";
+
+
 import axios from 'axios';
 
-function Navbar() {
+function MainPage() {
   const [textValue, setTextValue] = useState('');
   const [data, setData] = useState(null);
 
@@ -42,7 +43,7 @@ function Navbar() {
   // Your JSX and other code
 
   if (!data) {
-    return <div>Loading...</div>;
+    return <div class="rounded-md h-22 w-25 border-4 border-t-4 flex justify-center items-center border-customGray animate-spin absolute"></div>;
   }
   const convertUnixTime = (set) => {
     return new Date(set * 1000).toLocaleString('en-US', {
@@ -59,6 +60,18 @@ function Navbar() {
   }
 
   const currenttimed = currentTime(today)
+  const handlerGithub=()=>{
+    window.open('https://github.com/shaikhsabina637/04-weatherApp')
+  }
+  const weatherImages={
+    Clouds:'https://weather-pekkiriscim.vercel.app/src/img/animated/04d.svg',
+    Rain:'',
+    Mist:'https://weather-pekkiriscim.vercel.app/src/img/animated/50d.svg',
+    Clear:'https://weather-pekkiriscim.vercel.app/src/img/animated/01d.svg',
+    Haze:'https://weather-pekkiriscim.vercel.app/src/img/animated/50d.svg'
+  }
+  const weatherCondition = data.weather[0].main;
+  const weatherImage=weatherImages[weatherCondition];
   return (
     <>
     <nav className=' flex lg:justify-evenly lg:flex-row  sm:flex-col sm:items-center sm:justify-center sm:gap-2 lg:p-8 lg:mx-[15vw] sm:w-full]'>
@@ -78,10 +91,8 @@ function Navbar() {
         <div className='bg-customGray lg:w-[5vw]  sm:w-[10vw] flex justify-center items-center rounded-md lg:py-2'>
         <TbDirectionSignFilled className='text-3xl' onClick={getData}/>
         </div>
-        <div className='bg-customGray lg:w-[5vw] sm:w-[15vw] sm:py-2  flex justify-center items-center rounded-md'>
-        <BsMoon className='lg:text-2xl '/>
-        </div>
-        <div className='bg-black lg:w-[10vw] sm:w-[45vw] sm:py-3 flex justify-center items-center rounded-md hover:scale-x-110 duration-1000 transition-all'>
+       
+        <div className='bg-black lg:w-[10vw] sm:w-[45vw] sm:py-3 flex justify-center items-center rounded-md hover:scale-x-110 duration-1000 transition-all' onClick={handlerGithub}>
          <BsGithub className='text-2xl text-white'/>
          <p className='text-white  capitalize ml-2'>support github</p>
         </div>
@@ -94,7 +105,7 @@ function Navbar() {
         {/* first section */}
      <div className=' bg-customGray  lg:w-[17vw] sm:w-full flex pl-5 flex-col border  rounded-md border-black '>
        <img width="100px" 
-        className="text-black   w-[60%]"  alt='' src='https://weather-pekkiriscim.vercel.app/src/img/animated/50n.svg'/>
+        className="text-black   w-[60%]"  alt='' src={weatherImage}/>
         <p className=' font-bold ml-3 text-3xl mt-3'>{data.main.temp}<sup className=''>0</sup><span className='uppercase'>c</span></p>
         <p className='capitalize text-7 m-3'>{data.weather[0].main}</p>
         <div className='h-1 lg:w-[13vw]  sm:w-[57vw] mt-3 mb-8 bg-black'></div>
@@ -164,57 +175,10 @@ function Navbar() {
         </div>
         </div>
         </div>
-        {/* third section starts */}
-        <div className=' flex justify-between  items-center flex-col lg:w-[20vw] sm:w-full p-2 sm:gap-2  rounded-md'>
-            <div className='bg-customGray flex justify-around p-3 w-[100%] ] '>
-            <div className='flex justify-center flex-col p-2 rounded-md sm:w-[50vw] lg:w-auto'>
-               <p className='text-3 capitalize'>saturday</p>
-               <h1 className=''>20 :30</h1>
-            </div>
-            <div className='flex justify-center items-center '> 
-            <p className=' text-2xl'>23<sup className=''>0</sup><span className='uppercase'>c</span></p>
-            </div>
-            </div>
-            <div className='bg-customGray flex justify-around p-3 w-[100%] rounded-md '>
-            <div className='flex justify-center flex-col p-2 sm:w-[50vw] lg:w-auto'>
-               <p className='text-3 capitalize'>saturday</p>
-               <h1 className=''>20 :30</h1>
-            </div>
-            <div className='flex justify-center items-center '> 
-            <p className=' text-2xl'>23<sup className=''>0</sup><span className='uppercase'>c</span></p>
-            </div>
-            </div>
-            <div className='bg-customGray flex justify-around p-3 w-[100%] rounded-md'>
-            <div className='flex justify-center flex-col  p-2 sm:w-[50vw] lg:w-auto'>
-               <p className='text-3 capitalize'>saturday</p>
-               <h1 className=''>20 :30</h1>
-            </div>
-            <div className='flex justify-center items-center '> 
-              <p className=' text-2xl'>23<sup className=''>0</sup><span className='uppercase'>c</span></p>
-            </div>
-            </div>
-            <div className='bg-customGray flex justify-around p-3 w-[100%] rounded-md'>
-            <div className='flex justify-center flex-col p-2 sm:w-[50vw] lg:w-auto'>
-               <p className='text-3 capitalize'>saturday</p>
-               <h1 className=''>20 :30</h1>
-            </div>
-            <div className='flex justify-center items-center '> 
-            <p className=' text-2xl'>23<sup className=''>0</sup><span className='uppercase'>c</span></p>
-            </div>
-            </div>
-            <div className='bg-customGray flex justify-around p-3 w-[100%] rounded-md'>
-            <div className='flex justify-center flex-col  p-2 sm:w-[50vw] lg:w-auto'>
-               <p className='text-3 capitalize'>saturday</p>
-               <h1 className=''>20 :30</h1>
-            </div>
-            <div className='flex justify-center items-center '> 
-            <p className=' text-2xl'>23<sup className=''>0</sup><span className='uppercase'>c</span></p>
-            </div>
-            </div>
-        </div>
+        
         </div>
     </>
   )
 }
 
-export default Navbar
+export default MainPage

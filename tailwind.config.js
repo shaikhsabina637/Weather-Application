@@ -3,6 +3,7 @@ module.exports = {
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
+  darkMode: 'class',
   theme: {
     extend: {
       screens:{
@@ -10,6 +11,7 @@ module.exports = {
       },
       colors: {
         customGray: '#F5F5F5',
+        dark:'#424242'
       },
     },
   },

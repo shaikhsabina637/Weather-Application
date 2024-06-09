@@ -1,10 +1,9 @@
-
-import Navbar from './Navbar'
+import MainPage from "./MainPage"
 
 function WeatherApp() {
   return (
     <>
-    <Navbar/>
+    <MainPage/>
     </>
   )
 }
