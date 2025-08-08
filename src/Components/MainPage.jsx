@@ -10,12 +10,14 @@ import { SlCalender } from "react-icons/sl";
 import axios from 'axios';
 
 function MainPage() {
+  // state declarations to get a city value
   const [textValue, setTextValue] = useState('');
+  // state declarations to get weather data
   const [data, setData] = useState(null);
 
   // Memoize the getData function using useCallback
   const getData = useCallback(async () => {
-    if (textValue) {
+    if (textValue){
       try {
         const key = `63aadc7631001ec07c9b49f545bb46cd`;
         const url = `https://api.openweathermap.org/data/2.5/weather?q=${textValue}&appid=${key}&units=metric`;
@@ -39,9 +41,13 @@ function MainPage() {
   useEffect(() => {
     getData();
   }, []); // Include getData in the dependency array
-
+  const keyWeatherHandler =(e)=>{
+    if(e.key === "Enter"){
+      console.log("sabina")
+      getData()
+    }
+  }
   // Your JSX and other code
-
   if (!data) {
     return <div class="rounded-md h-22 w-25 border-4 border-t-4 flex justify-center items-center border-customGray animate-spin absolute"></div>;
   }
@@ -83,16 +89,17 @@ function MainPage() {
            <CiSearch className='text-2xl  mr-2'/> 
          <input className=' flex-1 placeholder:capitalize focus:outline-none bg-customGray'
          type="text"
-         placeholder='ankara'
+         placeholder='mumbai'
          value={textValue}
          onChange={(e)=>{setTextValue(e.target.value)}}
+         onKeyDown={(e)=>keyWeatherHandler(e)}
          />
         </div>
         <div className='bg-customGray lg:w-[5vw]  sm:w-[10vw] flex justify-center items-center rounded-md lg:py-2'>
         <TbDirectionSignFilled className='text-3xl' onClick={getData}/>
         </div>
        
-        <div className='bg-black lg:w-[10vw] sm:w-[45vw] sm:py-3 flex justify-center items-center rounded-md hover:scale-x-110 duration-1000 transition-all' onClick={handlerGithub}>
+        <div className='bg-black lg:w-[15vw] sm:w-[45vw] sm:py-3 flex justify-center items-center rounded-md hover:scale-x-110 duration-1000 transition-all' onClick={handlerGithub}>
          <BsGithub className='text-2xl text-white'/>
          <p className='text-white  capitalize ml-2'>support github</p>
         </div>
