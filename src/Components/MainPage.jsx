@@ -5,16 +5,17 @@ import { TbDirectionSignFilled } from "react-icons/tb";
 import { BsGithub } from "react-icons/bs";
 import { GrLocation } from "react-icons/gr";
 import { SlCalender } from "react-icons/sl";
-
+import WeatherPopup from './WeatherPopup';
 
 import axios from 'axios';
 
-function MainPage() {
+function MainPage(props) {
   // state declarations to get a city value
   const [textValue, setTextValue] = useState('');
   // state declarations to get weather data
   const [data, setData] = useState(null);
-
+// getting localstorage value 
+const visitedUserCheck = localStorage.getItem("visitedUser")
   // Memoize the getData function using useCallback
   const getData = useCallback(async () => {
     if (textValue){
@@ -80,6 +81,8 @@ function MainPage() {
   const weatherImage=weatherImages[weatherCondition];
   return (
     <>
+        {props.firstVisited &&  !visitedUserCheck && <WeatherPopup {...props} setData ={setData}/> }
+
     <nav className=' flex lg:justify-evenly lg:flex-row  sm:flex-col sm:items-center sm:justify-center sm:gap-2 lg:p-8 lg:mx-[15vw] sm:w-full]'>
         <div className='bg-customGray flex justify-evenly items-center lg:px-5  rounded-md lg:w-[10vw] sm:px-10 sm:py-2 '>
         <FaCloud className='lg:text-3xl  lg:mr-3 sm:mr-3' /> 
