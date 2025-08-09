@@ -4,11 +4,13 @@ import MainPage from "./MainPage"
 function WeatherApp() {
     const [firstVisited,setFirstVisited] = useState(true)
     const [isVisited ,setIsVisited] = useState(false)
+    const [darkTheme,setDarkTheme] = useState(false)
     const allProps ={
       firstVisited,
       setFirstVisited,
       isVisited,
-      setIsVisited
+      setIsVisited,
+      darkTheme,setDarkTheme
     }
   
   return (
