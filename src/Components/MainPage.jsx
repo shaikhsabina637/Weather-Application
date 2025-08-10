@@ -15,9 +15,7 @@ function MainPage(props) {
   const [data, setData] = useState(null);
   const visitedUserCheck = localStorage.getItem("visitedUser");
 
-  const toggleIcon = () => {
-    setDarkTheme(!darkTheme);
-  };
+  const toggleIcon = () => setDarkTheme(!darkTheme);
 
   const getData = useCallback(async (searchText) => {
     try {
@@ -26,9 +24,7 @@ function MainPage(props) {
       const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${key}&units=metric`;
       const response = await axios.get(url);
       setData(response.data);
-      if (searchText) {
-        setTextValue("");
-      }
+      if (searchText) setTextValue("");
     } catch (error) {
       console.log(error);
     }
@@ -39,9 +35,7 @@ function MainPage(props) {
   }, [getData]);
 
   const keyWeatherHandler = (e) => {
-    if (e.key === "Enter") {
-      getData(textValue);
-    }
+    if (e.key === "Enter") getData(textValue);
   };
 
   if (!data) {
@@ -56,12 +50,11 @@ function MainPage(props) {
     );
   }
 
-  const convertUnixTime = (set) => {
-    return new Date(set * 1000).toLocaleString("en-US", {
+  const convertUnixTime = (set) =>
+    new Date(set * 1000).toLocaleString("en-US", {
       hour: "2-digit",
       hour12: true,
     });
-  };
 
   const today = new Date();
   const currentTime = (date) => {
@@ -72,9 +65,8 @@ function MainPage(props) {
   };
 
   const currenttimed = currentTime(today);
-  const handlerGithub = () => {
+  const handlerGithub = () =>
     window.open("https://github.com/shaikhsabina637/04-weatherApp");
-  };
 
   const weatherImages = {
     Clouds: "https://weather-pekkiriscim.vercel.app/src/img/animated/04d.svg",
@@ -90,15 +82,14 @@ function MainPage(props) {
   return (
     <div
       className={`w-full max-w-[100vw] overflow-x-hidden px-4 min-h-screen ${
-        darkTheme
-          ? "bg-black text-customGray"
-          : "bg-white text-black"
+        darkTheme ? "bg-black text-customGray" : "bg-white text-black"
       }`}
     >
       {props.firstVisited && !visitedUserCheck && (
         <WeatherPopup {...props} setData={setData} />
       )}
 
+      {/* Navbar */}
       <nav
         className={`flex flex-wrap gap-3 justify-evenly items-center p-4 w-full ${
           darkTheme ? "bg-black" : "bg-white"
@@ -113,11 +104,15 @@ function MainPage(props) {
           }`}
         >
           <FaCloud
-            className={`text-2xl mr-2 ${
+            className={`text-xl sm:text-2xl mr-2 ${
               darkTheme ? "text-customGray" : "text-black"
             }`}
           />
-          <p className={darkTheme ? "text-customGray" : "text-black"}>
+          <p
+            className={`text-base sm:text-lg ${
+              darkTheme ? "text-customGray" : "text-black"
+            }`}
+          >
             weather
           </p>
         </div>
@@ -131,12 +126,12 @@ function MainPage(props) {
           }`}
         >
           <CiSearch
-            className={`text-2xl mr-2 ${
+            className={`text-xl sm:text-2xl mr-2 ${
               darkTheme ? "text-customGray" : "text-black"
             }`}
           />
           <input
-            className={`flex-1 placeholder:capitalize focus:outline-none ${
+            className={`flex-1 placeholder:capitalize focus:outline-none text-sm sm:text-base ${
               darkTheme
                 ? "bg-black text-customGray placeholder-customGray"
                 : "bg-customGray"
@@ -149,17 +144,17 @@ function MainPage(props) {
           />
         </div>
 
-        {/* Direction icon, GitHub & Theme toggle */}
+        {/* Action buttons */}
         <div className="flex flex-wrap sm:flex-nowrap justify-center gap-3 w-full sm:w-auto order-3 sm:order-none">
           <div
-            className={`flex justify-center items-center rounded-md p-2 w-[50px] ${
+            className={`flex justify-center items-center rounded-md p-2 w-[45px] sm:w-[50px] ${
               darkTheme
                 ? "bg-black border-[3px] border-customGray"
                 : "bg-customGray"
             }`}
           >
             <TbDirectionSignFilled
-              className={`text-3xl ${
+              className={`text-2xl sm:text-3xl ${
                 darkTheme ? "text-customGray" : "text-black"
               }`}
               onClick={() => getData(textValue)}
@@ -167,15 +162,17 @@ function MainPage(props) {
           </div>
 
           <div
-            className={`flex justify-center items-center rounded-md px-4 py-0 hover:scale-x-110 duration-1000 transition-all min-w-[160px] ${
+            className={`flex justify-center items-center rounded-md px-3 sm:px-4 py-0 hover:scale-x-110 duration-1000 transition-all min-w-[140px] sm:min-w-[160px] ${
               darkTheme
                 ? "bg-customGray text-black border-[3px] border-customGray"
                 : "bg-black text-white"
             }`}
             onClick={handlerGithub}
           >
-            <BsGithub className="text-xl" />
-            <p className="capitalize ml-2">support github</p>
+            <BsGithub className="text-lg sm:text-xl" />
+            <p className="capitalize ml-2 text-sm sm:text-base">
+              support github
+            </p>
           </div>
 
           <div
@@ -187,9 +184,9 @@ function MainPage(props) {
             }`}
           >
             {darkTheme ? (
-              <MdLightMode className="text-white text-2xl" />
+              <MdLightMode className="text-white text-xl sm:text-2xl" />
             ) : (
-              <MdDarkMode className="text-gray-800 text-2xl" />
+              <MdDarkMode className="text-gray-800 text-xl sm:text-2xl" />
             )}
           </div>
         </div>
@@ -197,15 +194,18 @@ function MainPage(props) {
 
       {/* Title */}
       <div
-        className={`flex justify-center lg:justify-start ${
+        className={`flex justify-center lg:justify-start mt-5 ${
           darkTheme ? "text-customGray" : "text-black"
         }`}
       >
-        <h1 className="text-2xl md:text-3xl capitalize">today overview</h1>
+        <h1 className="text-xl sm:text-2xl md:text-3xl capitalize ml-0 lg:ml-16">
+          today overview
+        </h1>
       </div>
 
       {/* Weather details */}
-      <div className="flex flex-col lg:flex-row gap-6 mt-3 p-3 w-full h-auto max-w-[1800px] mx-auto">
+      <div className="flex flex-col lg:flex-row gap-6 mt-3 p-4 sm:p-8 lg:p-16 w-full h-auto max-w-[1800px] mx-auto">
+        {/* Left box */}
         <div
           className={`flex flex-col rounded-md p-4 items-center lg:items-start w-full lg:w-[30%] ${
             darkTheme
@@ -215,7 +215,7 @@ function MainPage(props) {
         >
           <div>
             <img
-              className={`w-[60%] max-w-[150px] ${
+              className={`w-[50%] sm:w-[60%] max-w-[150px] ${
                 darkTheme ? "brightness-0 invert" : ""
               }`}
               alt=""
@@ -232,7 +232,7 @@ function MainPage(props) {
             <span className="uppercase">c</span>
           </p>
           <p
-            className={`capitalize mt-2 ${
+            className={`capitalize mt-2 text-base sm:text-lg ${
               darkTheme ? "text-customGray" : "text-black"
             }`}
           >
@@ -245,12 +245,12 @@ function MainPage(props) {
           ></div>
           <div className="flex items-center mb-2">
             <GrLocation
-              className={`text-2xl ${
+              className={`text-xl sm:text-2xl ${
                 darkTheme ? "text-customGray" : "text-black"
               }`}
             />
             <p
-              className={`capitalize ml-3 ${
+              className={`capitalize ml-3 text-sm sm:text-base ${
                 darkTheme ? "text-customGray" : "text-black"
               }`}
             >
@@ -259,12 +259,12 @@ function MainPage(props) {
           </div>
           <div className="flex items-center">
             <SlCalender
-              className={`text-2xl ${
+              className={`text-xl sm:text-2xl ${
                 darkTheme ? "text-customGray" : "text-black"
               }`}
             />
             <h1
-              className={`capitalize ml-3 ${
+              className={`capitalize ml-3 text-sm sm:text-base ${
                 darkTheme ? "text-customGray" : "text-black"
               }`}
             >
@@ -273,7 +273,7 @@ function MainPage(props) {
           </div>
         </div>
 
-        {/* Info cards */}
+        {/* Right info grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full lg:w-[70%]">
           {[
             {
@@ -317,8 +317,8 @@ function MainPage(props) {
             >
               <div>
                 <img
-                  height="50px"
-                  width="50px"
+                  height="40px"
+                  width="40px"
                   alt=""
                   src={item.icon}
                   className={darkTheme ? "brightness-0 invert" : ""}
@@ -326,14 +326,14 @@ function MainPage(props) {
               </div>
               <div className="p-2">
                 <p
-                  className={`capitalize ${
+                  className={`capitalize text-sm sm:text-base ${
                     darkTheme ? "text-customGray" : "text-black"
                   }`}
                 >
                   {item.label}
                 </p>
                 <h1
-                  className={`text-lg md:text-2xl font-bold ${
+                  className={`text-lg sm:text-xl md:text-2xl font-bold ${
                     darkTheme ? "text-customGray" : "text-black"
                   }`}
                 >
